@@ -1595,7 +1595,7 @@ body::before {
     border-radius: 14px;
   }
 
-  /* ── Card pool: flat single grid, NO category columns ── */
+  /* ── Card pool: scroll wrapper ── */
   .card-pool {
     flex: 1;
     display: block;
@@ -1605,21 +1605,18 @@ body::before {
     padding: 8px;
   }
 
-  /* Hide category column wrappers on mobile, show all cards flat */
+  /* Don't use display: contents on iOS Safari, it breaks grid! */
   .category-column {
-    display: contents;
+    display: block;
+    margin-bottom: 8px;
   }
 
   .category-header {
     display: none;
   }
 
+  /* The actual grids are inside the wrappers now */
   .category-grid {
-    display: contents;
-  }
-
-  /* The card-pool itself becomes the grid */
-  .card-pool {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 5px;
@@ -1697,7 +1694,7 @@ body::before {
 
 /* ── Small phones ── */
 @media (max-width: 400px) {
-  .card-pool {
+  .category-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 4px;
   }
