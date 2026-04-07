@@ -1413,87 +1413,95 @@ body::before {
 
 /* ── Mobile ── */
 @media (max-width: 768px) {
-  /* Base resets */
-  .screen { padding: 8px; }
+  /* Kill all margins, full screen */
+  .screen { padding: 0; }
   .draft-screen { padding: 0; gap: 0; }
 
   /* Lobby */
+  .lobby-container { padding: 24px 16px; }
   .logo { font-size: 1.8rem; }
   .logo-sub { font-size: 0.85rem; margin-bottom: 24px; }
-  .lobby-card { padding: 20px; }
+  .lobby-card { padding: 20px; border-radius: var(--radius-md); }
   .lobby-card h2 { font-size: 1.1rem; }
 
-  /* Draft header — compact single line */
+  /* Draft header: thin sticky bar */
   .draft-header {
     border-radius: 0;
-    padding: 8px 12px;
+    padding: 6px 12px;
     margin-bottom: 0;
     position: sticky;
     top: 0;
     z-index: 50;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
   }
-  .draft-phase-label { font-size: 0.85rem; }
-  .draft-turn-info { font-size: 0.75rem; }
-  .draft-step-counter { font-size: 0.65rem; }
+  .draft-phase-label { font-size: 0.8rem; }
+  .draft-turn-info { font-size: 0.7rem; }
+  .draft-step-counter { font-size: 0.6rem; }
   .draft-progress { margin-bottom: 0; border-radius: 0; }
 
-  /* Draft layout: stack vertically, card pool takes all space */
+  /* ── Draft layout: full vertical stack ── */
   .draft-layout {
     display: flex;
     flex-direction: column;
     gap: 0;
-    height: calc(100vh - 80px);
-    height: calc(100dvh - 80px);
+    height: calc(100vh - 60px);
+    height: calc(100dvh - 60px);
     overflow: hidden;
   }
 
-  /* Player panels become compact horizontal strips */
+  /* ── Player panels: ultra-compact single-line strips ── */
   .player-panel {
     flex-direction: row;
-    gap: 8px;
-    padding: 8px;
+    gap: 6px;
+    padding: 6px 10px;
     border-radius: 0;
     align-items: center;
-    overflow-x: auto;
     flex-shrink: 0;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background: rgba(15, 23, 42, 0.6);
-    border-left: none;
-    border-right: none;
+    border: none;
+    border-bottom: 1px solid var(--border-subtle);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: none;
   }
+  .player-panel::-webkit-scrollbar { display: none; }
 
   .player-header {
-    padding: 6px 10px;
+    padding: 4px 8px;
     min-width: fit-content;
     flex-shrink: 0;
+    border-radius: 8px;
+    gap: 6px;
   }
-  .player-header.p2 { flex-direction: row; text-align: left; }
-  .player-indicator { width: 28px; height: 28px; font-size: 0.7rem; }
-  .player-name { font-size: 0.75rem; }
-  .player-deck-count { font-size: 0.6rem; }
+  .player-header.p2 { flex-direction: row; text-align: left; border-left: 3px solid var(--player2); border-right: none; }
+  .player-indicator { width: 22px; height: 22px; font-size: 0.6rem; }
+  .player-name { font-size: 0.7rem; }
+  .player-deck-count { font-size: 0.55rem; }
 
-  /* Deck section: horizontal inline strip */
+  /* Deck + ban sections: compact inline */
   .deck-section {
     flex-direction: row;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
     flex-shrink: 0;
   }
   .deck-section-title {
     writing-mode: vertical-lr;
     text-orientation: mixed;
-    font-size: 0.55rem;
+    font-size: 0.5rem;
     letter-spacing: 1px;
     padding: 0;
   }
   .deck-slots {
     display: flex;
-    gap: 4px;
+    gap: 3px;
   }
   .deck-slot {
-    width: 36px;
-    height: 44px;
+    width: 28px;
+    height: 34px;
     aspect-ratio: auto;
     flex-shrink: 0;
     border-width: 1px;
@@ -1501,97 +1509,125 @@ body::before {
   }
   .deck-slot.filled .deck-elixir { display: none; }
 
-  /* Ban section: inline too */
   .ban-section {
     flex-direction: row;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
     flex-shrink: 0;
   }
   .ban-section .deck-slots {
     display: flex;
     grid-template-columns: unset;
-    gap: 3px;
+    gap: 2px;
   }
   .ban-slot {
-    width: 28px;
-    height: 34px;
+    width: 22px;
+    height: 26px;
     aspect-ratio: auto;
     border-radius: 3px;
   }
-  .ban-overlay { font-size: 0.8rem; }
+  .ban-overlay { font-size: 0.7rem; }
 
-  /* Card pool container fills remaining space */
+  /* ── Card pool: takes all remaining space ── */
   .card-pool-container {
     flex: 1;
     min-height: 0;
     border-radius: 0;
-    padding: 0 8px 8px 8px;
+    padding: 0;
     border: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background: transparent;
     box-shadow: none;
+    display: flex;
+    flex-direction: column;
   }
 
-  /* Filters: horizontally scrollable strip */
+  /* ── Filters: single scrollable row ── */
   .card-filters {
-    padding: 6px 0;
-    gap: 6px;
-  }
-  .filter-group, .filter-group-right {
+    flex-direction: row;
     flex-wrap: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 2px;
+    padding: 6px 8px;
+    gap: 4px;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.6);
+    border-bottom: 1px solid var(--border-subtle);
   }
-  .filter-group::-webkit-scrollbar, .filter-group-right::-webkit-scrollbar { display: none; }
-  .filter-btn { padding: 4px 10px; font-size: 0.65rem; white-space: nowrap; flex-shrink: 0; }
-  .filter-search { min-width: 100px; padding: 4px 10px; font-size: 0.7rem; flex-shrink: 0; }
-  .filter-select { padding: 4px 22px 4px 10px; font-size: 0.7rem; flex-shrink: 0; background-size: 12px; }
+  .card-filters::-webkit-scrollbar { display: none; }
 
-  /* Card pool: columns become vertical scroll with smaller cards */
+  .filter-group, .filter-group-right {
+    display: contents;
+  }
+
+  .filter-btn {
+    padding: 5px 10px;
+    font-size: 0.65rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border-radius: 14px;
+  }
+
+  .filter-search {
+    min-width: 90px;
+    max-width: 120px;
+    padding: 5px 10px;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+    border-radius: 14px;
+  }
+
+  .filter-select {
+    padding: 5px 22px 5px 8px;
+    font-size: 0.65rem;
+    flex-shrink: 0;
+    background-size: 12px;
+    border-radius: 14px;
+  }
+
+  /* ── Card pool: flat single grid, NO category columns ── */
   .card-pool {
-    flex-direction: column;
-    gap: 12px;
+    flex: 1;
+    display: block;
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    padding: 8px;
   }
 
+  /* Hide category column wrappers on mobile, show all cards flat */
   .category-column {
-    height: auto;
-    flex: none;
+    display: contents;
   }
 
   .category-header {
-    font-size: 0.75rem;
-    letter-spacing: 1.5px;
-    padding-bottom: 6px;
-    margin-bottom: 6px;
-    position: sticky;
-    top: 0;
-    background: var(--bg-primary);
-    z-index: 5;
+    display: none;
   }
-  .category-header .count { font-size: 0.65rem; }
 
   .category-grid {
-    grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
-    gap: 4px;
-    overflow-y: visible;
-    max-height: none;
+    display: contents;
   }
 
-  /* Cards: smaller and tighter */
+  /* The card-pool itself becomes the grid */
+  .card-pool {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    align-content: start;
+  }
+
+  /* Cards: thumb-friendly size */
   .card-item {
     padding: 0;
-    border-radius: 6px;
+    border-radius: 8px;
     border-width: 1.5px;
+    aspect-ratio: 3 / 4;
+    min-height: 0;
   }
 
-  .card-info { padding: 4px 5px; }
-  .card-name { font-size: 0.5rem; line-height: 1.1; }
+  .card-info { padding: 3px 5px; }
+  .card-name { font-size: 0.55rem; line-height: 1.1; }
 
   .elixir-pill {
     top: 3px; left: 3px;
@@ -1614,7 +1650,7 @@ body::before {
   .card-item.hovered-p2 { transform: scale(1.05); }
 
   .action-overlay .overlay-icon { font-size: 1.2rem; }
-  .action-overlay .overlay-text { font-size: 0.75rem; letter-spacing: 2px; }
+  .action-overlay .overlay-text { font-size: 0.7rem; letter-spacing: 2px; }
   .action-overlay .overlay-hint { font-size: 0.45rem; }
 
   .card-item.banned-card::after { font-size: 1.2rem; }
@@ -1622,7 +1658,7 @@ body::before {
   /* Action banner: thinner */
   .action-banner {
     padding: 6px;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
   }
 
   /* Action log: hide on mobile */
@@ -1639,7 +1675,7 @@ body::before {
   }
 
   /* Turn overlay */
-  .turn-overlay-content { font-size: 4rem; }
+  .turn-overlay-content { font-size: 3.5rem; }
 
   /* Finished screen */
   .finished-screen { padding: 16px; gap: 16px; }
@@ -1653,16 +1689,19 @@ body::before {
 
 /* ── Small phones ── */
 @media (max-width: 400px) {
-  .deck-slot { width: 30px; height: 36px; }
-  .ban-slot { width: 24px; height: 28px; }
-  .category-grid { grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); }
+  .card-pool {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+  .deck-slot { width: 26px; height: 32px; }
+  .ban-slot { width: 20px; height: 24px; }
   .card-item { border-width: 1px; }
-  .card-name { font-size: 0.45rem; }
+  .card-name { font-size: 0.5rem; }
   .card-info { padding: 2px 4px; }
   .elixir-pill { top: 2px; left: 2px; padding: 1px 3px; font-size: 0.5rem; }
-  .player-header { padding: 4px 8px; gap: 6px; }
-  .player-indicator { width: 24px; height: 24px; font-size: 0.6rem; }
-  .player-name { font-size: 0.65rem; }
+  .player-header { padding: 4px 6px; gap: 4px; }
+  .player-indicator { width: 20px; height: 20px; font-size: 0.55rem; }
+  .player-name { font-size: 0.6rem; }
 }
 
 /* ── Disconnected overlay ── */
