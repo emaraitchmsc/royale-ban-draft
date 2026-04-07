@@ -66,6 +66,8 @@ let state = {
   currentDraft: null,
   activeFilter: 'all',
   activeRarity: null,
+  activeElixir: null,
+  activeSort: 'elixir-asc',
   searchQuery: '',
   selectedCardId: null,
   opponentHoverId: null,
@@ -419,13 +421,28 @@ function renderCardPool(draft) {
   if (state.activeRarity) {
     filtered = filtered.filter(c => c.rarity === state.activeRarity);
   }
+  if (state.activeElixir) {
+    if (state.activeElixir === '7+') {
+      filtered = filtered.filter(c => c.elixir >= 7);
+    } else {
+      filtered = filtered.filter(c => parseInt(c.elixir) === parseInt(state.activeElixir));
+    }
+  }
   if (state.searchQuery) {
     const q = state.searchQuery.toLowerCase();
     filtered = filtered.filter(c => c.name.toLowerCase().includes(q));
   }
 
-  // Sort by elixir cost
-  filtered.sort((a, b) => a.elixir - b.elixir);
+  // Sort cards
+  if (state.activeSort === 'elixir-asc') {
+    filtered.sort((a, b) => a.elixir - b.elixir || a.name.localeCompare(b.name));
+  } else if (state.activeSort === 'elixir-desc') {
+    filtered.sort((a, b) => b.elixir - a.elixir || a.name.localeCompare(b.name));
+  } else if (state.activeSort === 'name-asc') {
+    filtered.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (state.activeSort === 'name-desc') {
+    filtered.sort((a, b) => b.name.localeCompare(a.name));
+  }
 
   // Group by category
   const groups = {
@@ -549,6 +566,25 @@ document.querySelectorAll('.filter-btn[data-rarity]').forEach(btn => {
   });
 });
 
+document.querySelectorAll('.filter-btn[data-elixir]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const wasActive = btn.classList.contains('active');
+    document.querySelectorAll('.filter-btn[data-elixir]').forEach(b => b.classList.remove('active'));
+    if (!wasActive) {
+      btn.classList.add('active');
+      state.activeElixir = btn.dataset.elixir;
+    } else {
+      state.activeElixir = null;
+    }
+    if (state.currentDraft) renderCardPool(state.currentDraft);
+  });
+});
+
+$('sort-select').addEventListener('change', (e) => {
+  state.activeSort = e.target.value;
+  if (state.currentDraft) renderCardPool(state.currentDraft);
+});
+
 $('card-search').addEventListener('input', (e) => {
   state.searchQuery = e.target.value;
   if (state.currentDraft) renderCardPool(state.currentDraft);
@@ -665,6 +701,8 @@ $('btn-new-session').addEventListener('click', () => {
     currentDraft: null,
     activeFilter: 'all',
     activeRarity: null,
+    activeElixir: null,
+    activeSort: 'elixir-asc',
     searchQuery: '',
   };
   showScreen('lobby');

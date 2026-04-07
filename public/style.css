@@ -645,13 +645,24 @@ body::before {
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
 }
 
-/* Filters */
 .card-filters {
   display: flex;
+  flex-direction: column;
   gap: 8px;
   padding: 8px 0;
+}
+
+.filter-group {
+  display: flex;
+  gap: 6px;
   flex-wrap: wrap;
+}
+
+.filter-group-right {
+  display: flex;
+  gap: 6px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .filter-btn {
@@ -674,6 +685,26 @@ body::before {
 .filter-btn.active {
   background: var(--accent-blue);
   color: white;
+  border-color: var(--accent-blue);
+}
+
+.filter-select {
+  padding: 6px 28px 6px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  background: var(--bg-card) url('data:image/svg+xml;utf8,<svg fill="%2394a3b8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 8px center;
+  background-size: 16px;
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.filter-select:focus {
   border-color: var(--accent-blue);
 }
 
@@ -1505,15 +1536,19 @@ body::before {
 
   /* Filters: horizontally scrollable strip */
   .card-filters {
+    padding: 6px 0;
+    gap: 6px;
+  }
+  .filter-group, .filter-group-right {
     flex-wrap: nowrap;
     overflow-x: auto;
-    gap: 6px;
-    padding: 6px 0;
     -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
   }
-  .card-filters::-webkit-scrollbar { display: none; }
-  .filter-btn { padding: 5px 10px; font-size: 0.7rem; white-space: nowrap; flex-shrink: 0; }
-  .filter-search { min-width: 100px; padding: 5px 10px; font-size: 0.75rem; flex-shrink: 0; }
+  .filter-group::-webkit-scrollbar, .filter-group-right::-webkit-scrollbar { display: none; }
+  .filter-btn { padding: 4px 10px; font-size: 0.65rem; white-space: nowrap; flex-shrink: 0; }
+  .filter-search { min-width: 100px; padding: 4px 10px; font-size: 0.7rem; flex-shrink: 0; }
+  .filter-select { padding: 4px 22px 4px 10px; font-size: 0.7rem; flex-shrink: 0; background-size: 12px; }
 
   /* Card pool: columns become vertical scroll with smaller cards */
   .card-pool {

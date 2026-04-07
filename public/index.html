@@ -114,17 +114,37 @@
       <!-- Card Pool (Center) -->
       <div class="card-pool-container">
         <div class="card-filters">
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="Troop">Troops</button>
-          <button class="filter-btn" data-filter="Building">Buildings</button>
-          <button class="filter-btn" data-filter="Spell">Spells</button>
-          <span style="width: 1px; height: 20px; background: var(--border-subtle);"></span>
-          <button class="filter-btn" data-rarity="Common">Common</button>
-          <button class="filter-btn" data-rarity="Rare">Rare</button>
-          <button class="filter-btn" data-rarity="Epic">Epic</button>
-          <button class="filter-btn" data-rarity="Legendary">Legend</button>
-          <button class="filter-btn" data-rarity="Champion">Champion</button>
-          <input id="card-search" class="filter-search" type="text" placeholder="Search cards..." autocomplete="off" spellcheck="false">
+          <div class="filter-group">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="Troop">Troops</button>
+            <button class="filter-btn" data-filter="Building">Buildings</button>
+            <button class="filter-btn" data-filter="Spell">Spells</button>
+          </div>
+          <div class="filter-group">
+            <button class="filter-btn" data-rarity="Common">Common</button>
+            <button class="filter-btn" data-rarity="Rare">Rare</button>
+            <button class="filter-btn" data-rarity="Epic">Epic</button>
+            <button class="filter-btn" data-rarity="Legendary">Legend</button>
+            <button class="filter-btn" data-rarity="Champion">Champion</button>
+          </div>
+          <div class="filter-group">
+            <button class="filter-btn" data-elixir="1">1</button>
+            <button class="filter-btn" data-elixir="2">2</button>
+            <button class="filter-btn" data-elixir="3">3</button>
+            <button class="filter-btn" data-elixir="4">4</button>
+            <button class="filter-btn" data-elixir="5">5</button>
+            <button class="filter-btn" data-elixir="6">6</button>
+            <button class="filter-btn" data-elixir="7+">7+</button>
+          </div>
+          <div class="filter-group-right">
+            <select id="sort-select" class="filter-select">
+              <option value="elixir-asc">Elixir: Low-High</option>
+              <option value="elixir-desc">Elixir: High-Low</option>
+              <option value="name-asc">Name: A-Z</option>
+              <option value="name-desc">Name: Z-A</option>
+            </select>
+            <input id="card-search" class="filter-search" type="text" placeholder="Search cards..." autocomplete="off" spellcheck="false">
+          </div>
         </div>
         <div id="card-pool" class="card-pool"></div>
       </div>
@@ -186,6 +206,6 @@
   <div id="copied-feedback" class="copied-feedback">📋 Copied to clipboard!</div>
 
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/app.js?v=5"></script>
+  <script src="/app.js?v=6"></script>
 </body>
 </html>
