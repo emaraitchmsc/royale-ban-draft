@@ -708,6 +708,14 @@ body::before {
   border-color: var(--accent-blue);
 }
 
+.filter-select-elixir {
+  border-color: rgba(236, 72, 153, 0.3);
+}
+
+.filter-select-elixir:focus {
+  border-color: #ec4899;
+}
+
 .filter-search {
   flex: 1;
   min-width: 120px;
@@ -830,7 +838,7 @@ body::before {
   display: flex;
   align-items: center;
   gap: 2px;
-  background: rgba(124, 58, 237, 0.85);
+  background: rgba(236, 72, 153, 0.85);
   backdrop-filter: blur(4px);
   padding: 2px 6px;
   border-radius: 10px;
@@ -1079,7 +1087,7 @@ body::before {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, #ec4899, #f472b6);
   color: white;
   font-size: 0.7rem;
   font-weight: 800;
@@ -1435,10 +1443,11 @@ body::before {
     background: rgba(15, 23, 42, 0.95);
     backdrop-filter: blur(12px);
   }
-  .draft-phase-label { font-size: 0.8rem; }
-  .draft-turn-info { font-size: 0.7rem; }
-  .draft-step-counter { font-size: 0.6rem; }
+  .draft-phase-label { font-size: 0.75rem; }
+  .draft-turn-info { font-size: 0.65rem; }
+  .draft-step-counter { font-size: 0.55rem; }
   .draft-progress { margin-bottom: 0; border-radius: 0; }
+  .draft-timer { position: static !important; font-size: 0.9rem !important; padding: 2px 6px !important; }
 
   /* ── Draft layout: full vertical stack ── */
   .draft-layout {
@@ -1451,10 +1460,14 @@ body::before {
   }
 
   /* ── Player panels: ultra-compact single-line strips ── */
+  #panel-p1 { order: 1; }
+  #panel-p2 { order: 2; }
+  .card-pool-container { order: 3; }
+
   .player-panel {
     flex-direction: row;
     gap: 6px;
-    padding: 6px 10px;
+    padding: 4px 10px;
     border-radius: 0;
     align-items: center;
     flex-shrink: 0;
@@ -1489,11 +1502,7 @@ body::before {
     flex-shrink: 0;
   }
   .deck-section-title {
-    writing-mode: vertical-lr;
-    text-orientation: mixed;
-    font-size: 0.5rem;
-    letter-spacing: 1px;
-    padding: 0;
+    display: none;
   }
   .deck-slots {
     display: flex;
@@ -1655,10 +1664,9 @@ body::before {
 
   .card-item.banned-card::after { font-size: 1.2rem; }
 
-  /* Action banner: thinner */
+  /* Action banner: hide on mobile (phase label + turn info already shows this) */
   .action-banner {
-    padding: 6px;
-    font-size: 0.7rem;
+    display: none !important;
   }
 
   /* Action log: hide on mobile */

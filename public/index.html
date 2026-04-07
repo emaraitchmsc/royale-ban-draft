@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Clash Royale Pick/Ban Deck Builder — Draft decks with friends in a competitive pick and ban format.">
   <title>Royale Draft — Pick/Ban Deck Builder</title>
-  <link rel="stylesheet" href="/style.css?v=7">
+  <link rel="stylesheet" href="/style.css?v=8">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
 </head>
 <body>
@@ -120,30 +120,32 @@
             <button class="filter-btn" data-filter="Building">Buildings</button>
             <button class="filter-btn" data-filter="Spell">Spells</button>
           </div>
-          <div class="filter-group">
-            <button class="filter-btn" data-rarity="Common">Common</button>
-            <button class="filter-btn" data-rarity="Rare">Rare</button>
-            <button class="filter-btn" data-rarity="Epic">Epic</button>
-            <button class="filter-btn" data-rarity="Legendary">Legend</button>
-            <button class="filter-btn" data-rarity="Champion">Champion</button>
-          </div>
-          <div class="filter-group">
-            <button class="filter-btn" data-elixir="1">1</button>
-            <button class="filter-btn" data-elixir="2">2</button>
-            <button class="filter-btn" data-elixir="3">3</button>
-            <button class="filter-btn" data-elixir="4">4</button>
-            <button class="filter-btn" data-elixir="5">5</button>
-            <button class="filter-btn" data-elixir="6">6</button>
-            <button class="filter-btn" data-elixir="7+">7+</button>
-          </div>
           <div class="filter-group-right">
-            <select id="sort-select" class="filter-select">
-              <option value="elixir-asc">Elixir: Low-High</option>
-              <option value="elixir-desc">Elixir: High-Low</option>
-              <option value="name-asc">Name: A-Z</option>
-              <option value="name-desc">Name: Z-A</option>
+            <select id="rarity-select" class="filter-select">
+              <option value="">Rarity</option>
+              <option value="Common">Common</option>
+              <option value="Rare">Rare</option>
+              <option value="Epic">Epic</option>
+              <option value="Legendary">Legendary</option>
+              <option value="Champion">Champion</option>
             </select>
-            <input id="card-search" class="filter-search" type="text" placeholder="Search cards..." autocomplete="off" spellcheck="false">
+            <select id="elixir-select" class="filter-select filter-select-elixir">
+              <option value="">Elixir</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7+">7+</option>
+            </select>
+            <select id="sort-select" class="filter-select">
+              <option value="elixir-asc">Elixir ↑</option>
+              <option value="elixir-desc">Elixir ↓</option>
+              <option value="name-asc">Name A-Z</option>
+              <option value="name-desc">Name Z-A</option>
+            </select>
+            <input id="card-search" class="filter-search" type="text" placeholder="Search..." autocomplete="off" spellcheck="false">
           </div>
         </div>
         <div id="card-pool" class="card-pool"></div>
@@ -206,6 +208,6 @@
   <div id="copied-feedback" class="copied-feedback">📋 Copied to clipboard!</div>
 
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/app.js?v=7"></script>
+  <script src="/app.js?v=8"></script>
 </body>
 </html>

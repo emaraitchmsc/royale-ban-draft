@@ -453,7 +453,7 @@ function renderCardPool(draft) {
   }
 
   let html = '';
-  const elixirSvg = `<svg viewBox="0 0 24 24"><path fill="#f0abfc" d="M12 2c0 0-7 9.8-7 14a7 7 0 1 0 14 0c0-4.2-7-14-7-14z"/></svg>`;
+  const elixirSvg = `<svg viewBox="0 0 24 24"><path fill="#f472b6" d="M12 2c0 0-7 9.8-7 14a7 7 0 1 0 14 0c0-4.2-7-14-7-14z"/></svg>`;
 
   // Your-turn edge glow on draft screen
   const draftScreen = $('screen-draft');
@@ -566,18 +566,14 @@ document.querySelectorAll('.filter-btn[data-rarity]').forEach(btn => {
   });
 });
 
-document.querySelectorAll('.filter-btn[data-elixir]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const wasActive = btn.classList.contains('active');
-    document.querySelectorAll('.filter-btn[data-elixir]').forEach(b => b.classList.remove('active'));
-    if (!wasActive) {
-      btn.classList.add('active');
-      state.activeElixir = btn.dataset.elixir;
-    } else {
-      state.activeElixir = null;
-    }
-    if (state.currentDraft) renderCardPool(state.currentDraft);
-  });
+$('rarity-select').addEventListener('change', (e) => {
+  state.activeRarity = e.target.value || null;
+  if (state.currentDraft) renderCardPool(state.currentDraft);
+});
+
+$('elixir-select').addEventListener('change', (e) => {
+  state.activeElixir = e.target.value || null;
+  if (state.currentDraft) renderCardPool(state.currentDraft);
 });
 
 $('sort-select').addEventListener('change', (e) => {
