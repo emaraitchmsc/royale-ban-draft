@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Clash Royale Pick/Ban Deck Builder — Draft decks with friends in a competitive pick and ban format.">
+  <title>Royale Draft — Pick/Ban Deck Builder</title>
+  <link rel="stylesheet" href="/style.css?v=5">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+</head>
+<body>
+  <!-- ========== LOBBY ========== -->
+  <div id="screen-lobby" class="screen">
+    <div class="lobby-container">
+      <h1 class="logo">⚔️ Royale Draft</h1>
+      <p class="logo-sub">Pick &amp; Ban Deck Builder</p>
+
+      <div class="lobby-card">
+        <h2>Start a Draft Session</h2>
+        <button id="btn-create" class="btn btn-primary">
+          ⚡ Create Room
+        </button>
+
+        <div class="lobby-divider"><span>or join a friend</span></div>
+
+        <div class="input-group">
+          <input id="input-code" class="input input-code" type="text" placeholder="CODE" maxlength="5" autocomplete="off" spellcheck="false">
+          <button id="btn-join" class="btn btn-gold" style="width: auto; padding: 14px 24px;">
+            Join
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== WAITING ========== -->
+  <div id="screen-waiting" class="screen hidden">
+    <div class="waiting-container" style="background: var(--bg-card); padding: 32px; border-radius: 16px; border: 1px solid var(--border-subtle); width: 100%; max-width: 480px;">
+      <h1 class="logo" style="font-size: 1.8rem; margin-bottom: 8px;">⚔️ Royale Draft</h1>
+      <p style="color: var(--text-secondary); margin-bottom: 24px;">Share this link with your opponent to start</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px;">
+        <input type="text" id="share-link" class="input" readonly style="width: 100%; text-align: center; font-weight: bold; font-size: 0.9rem; background: var(--bg-secondary);">
+        <button id="btn-copy-link" class="btn btn-gold lg" style="width: 100%;">Copy Link to Play</button>
+      </div>
+
+      <div class="waiting-dots">
+        <span></span><span></span><span></span>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 16px;">Waiting for opponent to join...</p>
+    </div>
+  </div>
+
+  <!-- ========== NAMING ========== -->
+  <div id="screen-naming" class="screen hidden">
+    <div class="naming-container">
+      <h2>Enter Your Name</h2>
+      <p>Choose a name for the draft</p>
+      <div class="input-group">
+        <input id="input-name" class="input" type="text" placeholder="Your name..." maxlength="20" autocomplete="off" spellcheck="false">
+        <button id="btn-name" class="btn btn-primary" style="width: auto; padding: 14px 24px;">
+          Ready
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== DRAFT ========== -->
+  <div id="screen-draft" class="screen draft-screen hidden">
+    <!-- Action Banner (top) -->
+    <div id="action-banner" class="action-banner hidden"></div>
+
+    <!-- Progress bar -->
+    <div class="draft-progress">
+      <div id="draft-progress-bar" class="draft-progress-bar" style="width: 0%"></div>
+    </div>
+
+    <!-- Header -->
+    <div class="draft-header">
+      <div class="draft-step-counter">
+        <span id="step-display">0 / 28</span>
+      </div>
+      <div class="draft-phase" style="position: relative;">
+        <span id="phase-label" class="draft-phase-label">Ban Phase</span>
+        <span id="turn-info" class="draft-turn-info"></span>
+        <div id="draft-timer" class="draft-timer hidden">30</div>
+      </div>
+      <div class="draft-step-counter" style="text-align: right;">
+        Room: <strong id="header-room-code"></strong>
+      </div>
+    </div>
+
+    <!-- Main layout: P1 | Cards | P2 -->
+    <div class="draft-layout">
+      <!-- Player 1 Panel -->
+      <div class="player-panel" id="panel-p1">
+        <div id="header-p1" class="player-header p1">
+          <div class="player-indicator p1">P1</div>
+          <div>
+            <div id="name-p1" class="player-name">Player 1</div>
+            <div id="deck-count-p1" class="player-deck-count">0 / 8 cards</div>
+          </div>
+        </div>
+        <div class="deck-section">
+          <div class="deck-section-title">Deck</div>
+          <div id="deck-p1" class="deck-slots"></div>
+        </div>
+        <div class="ban-section">
+          <div class="deck-section-title" style="color: var(--color-ban);">Banned</div>
+          <div id="bans-p1" class="deck-slots"></div>
+        </div>
+      </div>
+
+      <!-- Card Pool (Center) -->
+      <div class="card-pool-container">
+        <div class="card-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="Troop">Troops</button>
+          <button class="filter-btn" data-filter="Building">Buildings</button>
+          <button class="filter-btn" data-filter="Spell">Spells</button>
+          <span style="width: 1px; height: 20px; background: var(--border-subtle);"></span>
+          <button class="filter-btn" data-rarity="Common">Common</button>
+          <button class="filter-btn" data-rarity="Rare">Rare</button>
+          <button class="filter-btn" data-rarity="Epic">Epic</button>
+          <button class="filter-btn" data-rarity="Legendary">Legend</button>
+          <button class="filter-btn" data-rarity="Champion">Champion</button>
+          <input id="card-search" class="filter-search" type="text" placeholder="Search cards..." autocomplete="off" spellcheck="false">
+        </div>
+        <div id="card-pool" class="card-pool"></div>
+      </div>
+
+      <!-- Player 2 Panel -->
+      <div class="player-panel" id="panel-p2">
+        <div id="header-p2" class="player-header p2">
+          <div class="player-indicator p2">P2</div>
+          <div>
+            <div id="name-p2" class="player-name">Player 2</div>
+            <div id="deck-count-p2" class="player-deck-count">0 / 8 cards</div>
+          </div>
+        </div>
+        <div class="deck-section">
+          <div class="deck-section-title">Deck</div>
+          <div id="deck-p2" class="deck-slots"></div>
+        </div>
+        <div class="ban-section">
+          <div class="deck-section-title" style="color: var(--color-ban);">Banned</div>
+          <div id="bans-p2" class="deck-slots"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action log -->
+    <div class="action-log" id="action-log">
+      <div class="action-log-title">Draft Log</div>
+      <div id="action-log-entries" class="action-log-entries"></div>
+    </div>
+    
+    <!-- Turn Overlay -->
+    <div id="turn-overlay" class="turn-overlay hidden">
+      <h1 id="turn-overlay-text">YOUR TURN</h1>
+    </div>
+  </div>
+
+  <!-- ========== FINISHED ========== -->
+  <div id="screen-finished" class="screen finished-screen hidden">
+    <h1 class="finished-title">⚔️ Draft Complete!</h1>
+    <div id="finished-decks" class="finished-decks"></div>
+    <div id="finished-bans" class="finished-bans"></div>
+    <div class="new-session-area">
+      <button id="btn-new-session" class="btn btn-primary">
+        🔄 New Draft
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== DISCONNECT OVERLAY ========== -->
+  <div id="disconnect-overlay" class="disconnect-overlay hidden">
+    <h2>⚠️ Opponent Disconnected</h2>
+    <p>Waiting for them to reconnect...</p>
+  </div>
+
+  <!-- ========== TOAST ========== -->
+  <div id="toast" class="toast"></div>
+
+  <!-- ========== COPIED FEEDBACK ========== -->
+  <div id="copied-feedback" class="copied-feedback">📋 Copied to clipboard!</div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/app.js?v=5"></script>
+</body>
+</html>
