@@ -1,6 +1,10 @@
 <h1 align="center">⚔️ Royale Draft</h1>
 
 <p align="center">
+  <img src="cover.png" alt="Royale Draft Concept Art" width="600" style="border-radius:12px;">
+</p>
+
+<p align="center">
   <strong>Esports-Grade Real-Time Multiplayer Clash Royale Draft Builder</strong>
 </p>
 
