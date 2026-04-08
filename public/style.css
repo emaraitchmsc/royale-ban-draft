@@ -1567,7 +1567,10 @@ body::before {
   .card-filters::-webkit-scrollbar { display: none; }
 
   .filter-group, .filter-group-right {
-    display: contents;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 4px;
   }
 
   .filter-btn {
@@ -1629,7 +1632,7 @@ body::before {
     border-radius: 8px;
     border-width: 1.5px;
     aspect-ratio: 3 / 4;
-    min-height: 0;
+    min-height: 100px; /* Fallback for old Safari that ignores aspect-ratio */
   }
 
   .card-info { padding: 3px 5px; }
